@@ -8,7 +8,7 @@
         public sealed class Pudelko : IFormattable
         {
 
-            UnitOfMeasure miara { get; set; }
+            UnitOfMeasure unit { get; set; }
             //Zaimplementuj properties o nazwach A, B i C zwracające wymiary pudełka w metrach(z dokładnością do 3 miejsc po przecinku).
             private double _a;
             private double _b;
@@ -17,16 +17,16 @@
             {
                 get
                 {
-                    if (miara == UnitOfMeasure.meter)
+                    if (unit == UnitOfMeasure.meter)
                     {
                         _a = Math.Round(_a, 3);
                     }
-                    else if (miara == UnitOfMeasure.centimeter)
+                    else if (unit == UnitOfMeasure.centimeter)
                     {
 
                         _a = Math.Round((_a / 100), 3);
                     }
-                    else if (miara == UnitOfMeasure.milimeter)
+                    else if (unit == UnitOfMeasure.milimeter)
                     {
 
                         _a = Math.Round((_a / 1000), 3);
@@ -40,16 +40,16 @@
                 get
                 {
 
-                    if (miara == UnitOfMeasure.meter)
+                    if (unit == UnitOfMeasure.meter)
                     {
                         _b = Math.Round(_b, 3);
                     }
-                    else if (miara == UnitOfMeasure.centimeter)
+                    else if (unit == UnitOfMeasure.centimeter)
                     {
 
                         _b = Math.Round((_b / 100), 3);
                     }
-                    else if (miara == UnitOfMeasure.milimeter)
+                    else if (unit == UnitOfMeasure.milimeter)
                     {
 
                         _b = Math.Round((_b / 1000), 3);
@@ -63,16 +63,16 @@
                 get
                 {
 
-                    if (miara == UnitOfMeasure.meter)
+                    if (unit == UnitOfMeasure.meter)
                     {
                         _c = Math.Round(_c, 3);
                     }
-                    else if (miara == UnitOfMeasure.centimeter)
+                    else if (unit == UnitOfMeasure.centimeter)
                     {
 
                         _c = Math.Round((_c / 100), 3);
                     }
-                    else if (miara == UnitOfMeasure.milimeter)
+                    else if (unit == UnitOfMeasure.milimeter)
                     {
 
                         _c = Math.Round((_c / 1000), 3);
@@ -84,7 +84,7 @@
 
             private List<double> ListaPo = new List<double>();
 
-            public Pudelko(List<double> lista = default(List<double>)/*null?*/, UnitOfMeasure u = UnitOfMeasure.meter)
+            public Pudelko(List<double> lista = default(List<double>)/*null?*/, UnitOfMeasure unit = UnitOfMeasure.meter)
             {
                 if (lista == null)
                 {
@@ -92,7 +92,7 @@
                     lista.Add(10);
                     lista.Add(10);
                     lista.Add(10);
-                    u = UnitOfMeasure.centimeter;
+                    unit = UnitOfMeasure.centimeter;
                 }
                 foreach (double n in lista)
                 {
@@ -100,7 +100,7 @@
                     if (n < 0)
                     { throw new ArgumentOutOfRangeException(); }
                     //W przypadku próby utworzenia pudełka z którymkolwiek z parametrów większym niż 10 metrów, zgłaszany jest wyjątek ArgumentOutOfRangeException.
-                    else if (((u == UnitOfMeasure.milimeter) & (n > 100000)) || ((u == UnitOfMeasure.centimeter) & (n > 10000)) || ((u == UnitOfMeasure.meter) & (n > 10)))
+                    else if (((unit == UnitOfMeasure.milimeter) & (n > 100000)) || ((unit == UnitOfMeasure.centimeter) & (n > 10000)) || ((unit == UnitOfMeasure.meter) & (n > 10)))
 
                     { throw new ArgumentOutOfRangeException(); }
                 }
@@ -112,13 +112,13 @@
                 {
                     if (lista.Count == 0)
                     {
-                        if (u == UnitOfMeasure.milimeter)
+                        if (unit == UnitOfMeasure.milimeter)
                         {
                             lista.Add(1000);
                             lista.Add(1000);
                             lista.Add(1000);
                         }
-                        else if (u == UnitOfMeasure.centimeter)
+                        else if (unit == UnitOfMeasure.centimeter)
                         {
                             lista.Add(10);
                             lista.Add(10);
@@ -135,12 +135,12 @@
                     {
 
 
-                        if (u == UnitOfMeasure.milimeter)
+                        if (unit == UnitOfMeasure.milimeter)
                         {
                             lista.Add(1000);
                             lista.Add(1000);
                         }
-                        else if (u == UnitOfMeasure.centimeter)
+                        else if (unit == UnitOfMeasure.centimeter)
                         {
                             lista.Add(10);
                             lista.Add(10);
@@ -154,11 +154,11 @@
                     }
                     else if (lista.Count == 2)
                     {
-                        if (u == UnitOfMeasure.milimeter)
+                        if (unit == UnitOfMeasure.milimeter)
                         {
                             lista.Add(1000);
                         }
-                        else if (u == UnitOfMeasure.centimeter)
+                        else if (unit == UnitOfMeasure.centimeter)
                         {
                             lista.Add(10);
                         }
@@ -171,7 +171,7 @@
                 _a = lista[0];
                 _b = lista[1];
                 _c = lista[2];
-                miara = u;
+                this.unit = unit;
                 ListaPo = lista;
             }
 
