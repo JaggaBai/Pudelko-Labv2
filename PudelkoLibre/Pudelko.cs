@@ -57,27 +57,30 @@ namespace PudelkoLibre
             return x;
         }
 
-        public double WykopujemyMiejscaPoPrzecinku(double z, UnitOfMeasure mm)
+        public string WykopujemyMiejscaPoPrzecinku(double z, UnitOfMeasure mm)
         {
-             double zwrot =0;
-            decimal zz = Convert.ToDecimal(z);
-            if (mm == UnitOfMeasure.meter)
-            {
-                zz = Math.Round(((zz)), 3, MidpointRounding.ToZero);
-                zwrot = Convert.ToDouble(zz.ToString("#.###"));
-            }
-            // zwrot = zz.ToString("F3", CultureInfo.CurrentCulture); }
-            else if (mm == UnitOfMeasure.centimeter)
-            {
-                zz = Math.Round(((zz)), 1, MidpointRounding.ToZero);
-                zwrot = Convert.ToDouble(zz.ToString("#.#"));
-            }
-            else if (mm == UnitOfMeasure.milimeter)
-            {
-                zz = Math.Round(((zz)), 0, MidpointRounding.ToZero);
-                zwrot = Convert.ToDouble(zz.ToString("#."));
-            }
-                return zwrot;
+            
+            double zz=0;
+            
+                if (mm == UnitOfMeasure.meter)
+                {
+                    zz = Math.Round((z), 3, MidpointRounding.ToZero);
+                    //zwrot = z.ToString("#.###");
+                }
+                // zwrot = zz.ToString("F3", CultureInfo.CurrentCulture); }
+                else if (mm == UnitOfMeasure.centimeter)
+                {
+                    zz = Math.Round(((z)), 1, MidpointRounding.ToZero);
+                    //zwrot = z.ToString("#.#");
+                }
+                else if (mm == UnitOfMeasure.milimeter)
+                {
+                    zz = Math.Round(((z)), 0, MidpointRounding.ToZero);
+                    // zwrot = z.ToString("#.");
+                }
+
+            return zz.ToString();
+               
         }
 
         public Pudelko(double? a = null, double? b = null, double? c = null, UnitOfMeasure unit = UnitOfMeasure.meter)
@@ -117,18 +120,22 @@ namespace PudelkoLibre
             }
             else if (!c.HasValue & u == UnitOfMeasure.meter)
             { c = 0.1; }
-            
-            //W przypadku próby utworzenia pudełka z którymkolwiek z parametrów niedodatnim, zgłaszany jest wyjątek ArgumentOutOfRangeException
-            if (a < 0 || b < 0 || c < 0)
-            { throw new ArgumentOutOfRangeException(); }
-            //W przypadku próby utworzenia pudełka z którymkolwiek z parametrów większym niż 10 metrów, zgłaszany jest wyjątek ArgumentOutOfRangeException.
-            else if (((u == UnitOfMeasure.milimeter) & ((a > 100000) || (b > 100000) || (c > 100000))) || ((u == UnitOfMeasure.centimeter) & ((a > 10000) || (b > 10000) || (c > 10000))) || ((u == UnitOfMeasure.meter) & ((a > 10) || (b > 10) || (c > 10))))
-
-            { throw new ArgumentOutOfRangeException(); }
             double a1 = Convert.ToDouble(WykopujemyMiejscaPoPrzecinku((double)a, u));
             double b1 = Convert.ToDouble(WykopujemyMiejscaPoPrzecinku((double)b, u));
             double c1 = Convert.ToDouble(WykopujemyMiejscaPoPrzecinku((double)c, u));
+            //double a1 = (double)a;
+            // double b1 = (double)b;
+            // double c1 = (double)c;
+            //W przypadku próby utworzenia pudełka z którymkolwiek z parametrów niedodatnim, zgłaszany jest wyjątek ArgumentOutOfRangeException
+            if ((a1 <= 0 | b1 <= 0 | c1 <= 0) || ((u == UnitOfMeasure.milimeter) & ((a1 > 10000) | (b1 > 10000) | (c1 > 10000))) || ((u == UnitOfMeasure.centimeter) & ((a1 > 1000) | (b1 > 1000) | (c1 > 1000))) || ((u == UnitOfMeasure.meter) & ((a1 > 10) | (b1 > 10) | (c1 > 10))))
+            { throw new ArgumentOutOfRangeException(); }
+            //W przypadku próby utworzenia pudełka z którymkolwiek z parametrów większym niż 10 metrów, zgłaszany jest wyjątek ArgumentOutOfRangeException.
 
+           // { throw new ArgumentOutOfRangeException(); }
+          
+            //double a12 = WykopujemyMiejscaPoPrzecinku(a1, u);
+            //double b12 = WykopujemyMiejscaPoPrzecinku(b1, u);
+            //double c12 = WykopujemyMiejscaPoPrzecinku(c1, u);
             _a = Zmiana(a1, u) ;
             _b = Zmiana(b1, u);
             _c = Zmiana(c1, u);
