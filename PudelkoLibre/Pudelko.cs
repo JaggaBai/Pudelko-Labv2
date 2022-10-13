@@ -307,21 +307,62 @@ namespace PudelkoLibre
         //    Przeglądanie długości krawędzi - pętla foreach
 
         //Zaimplementuj mechanizm przeglądania długości krawędzi pudełka za pomocą pętli foreach w kolejności od A do C(np. foreach(var x in p) { ... }). Formalnie, jest to implementacja interfejsu IEnumerable.
-     
+
         public IEnumerator GetEnumerator()
         {
             foreach (double val in krawedzie)
             {
                 yield return val;
             }
-
-            //    Metoda parsująca ze string
-
-            //        Zaimplementuj statyczną metodę Parse komplementarną do tekstowej reprezentacji pudełka(ToString() oraz ToString(format)). Przykładowo new P(2.5, 9.321, 0.1) == P.Parse("2.500 m × 9.321 m × 0.100 m").
-            //Rozważ różne przypadki jednostek miar(patrz: konstruktor i formatowana metoda ToString).
-
-
-
         }
+
+        //    Metoda parsująca ze string
+
+        //        Zaimplementuj statyczną metodę Parse komplementarną do tekstowej reprezentacji pudełka(ToString() oraz ToString(format)). Przykładowo new P(2.5, 9.321, 0.1) == P.Parse("2.500 m × 9.321 m × 0.100 m").
+        //Rozważ różne przypadki jednostek miar(patrz: konstruktor i formatowana metoda ToString).
+
+       // P.Parse("2.500 m × 9.321 m × 0.100 m")
+        public static Pudelko Parse(string f)
+        {
+            string[] firstA = f.Trim().Split("×");
+            foreach (var sub in firstA)
+            {
+                Console.WriteLine($"Substring: {sub}");
+            }
+            string[] fA1 = (firstA[0].Trim()).Split(" ");
+            foreach (var sub in fA1)
+            {
+                Console.WriteLine($"Substring: {sub}");
+            }
+            string[] fA2 = (firstA[1].Trim()).Split(" ");
+            string[] fA3 = (firstA[2].Trim()).Split(" ");
+            string[] secondA = new string[] { fA1[0], fA2[0], fA3[0], fA3[1] };
+            foreach (var sub in secondA)
+            {
+                Console.WriteLine($"Substring: {sub}");
+            }
+            string format = secondA[3];
+            string ANs = secondA[0].Trim();
+            string BNs = secondA[1].Trim();
+            string CNs = secondA[2].Trim();
+            Console.WriteLine(ANs);
+            double AN = Convert.ToDouble(ANs, CultureInfo.InvariantCulture);
+            double BN = Convert.ToDouble(BNs, CultureInfo.InvariantCulture);
+            double CN = Convert.ToDouble(CNs, CultureInfo.InvariantCulture);
+
+            switch (format)
+            {
+                case "m":
+                    return new Pudelko(AN, BN, CN, unit: UnitOfMeasure.meter);
+                case "cm":
+                    return new Pudelko(AN, BN, CN, unit: UnitOfMeasure.centimeter);
+                case "mm":
+                    return new Pudelko(AN, BN, CN, unit: UnitOfMeasure.milimeter);
+                default:
+                    throw new FormatException();
+            }
+        }
+
     }
 }
+
