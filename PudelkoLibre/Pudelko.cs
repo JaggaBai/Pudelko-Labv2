@@ -325,22 +325,13 @@ namespace PudelkoLibre
         public static Pudelko Parse(string f)
         {
             string[] firstA = f.Trim().Split("×");
-            foreach (var sub in firstA)
-            {
-                Console.WriteLine($"Substring: {sub}");
-            }
+            
             string[] fA1 = (firstA[0].Trim()).Split(" ");
-            foreach (var sub in fA1)
-            {
-                Console.WriteLine($"Substring: {sub}");
-            }
+           
             string[] fA2 = (firstA[1].Trim()).Split(" ");
             string[] fA3 = (firstA[2].Trim()).Split(" ");
             string[] secondA = new string[] { fA1[0], fA2[0], fA3[0], fA3[1] };
-            foreach (var sub in secondA)
-            {
-                Console.WriteLine($"Substring: {sub}");
-            }
+           
             string format = secondA[3];
             string ANs = secondA[0].Trim();
             string BNs = secondA[1].Trim();
@@ -362,6 +353,12 @@ namespace PudelkoLibre
                     throw new FormatException();
             }
         }
+
+    //    Metody rozszerzające
+
+    //W projekcie typu Console App utwórz metodę rozszerzającą klasę Pudelko o nazwie Kompresuj, która zwraca pudełko sześcienne o takiej samej objętości, jak pudełko oryginalne.
+
+
 
     }
 }

@@ -446,6 +446,71 @@ namespace PudelkoUnitTests
             var stringformatedrepreentation = p.ToString("wrong code");
         }
 
+        //MOJE
+        //        Utwórz testy jednostkowe(unit tests) dla:
+        //    properties Objetosc i Pole,
+        [TestMethod]
+        public void SprawdzanieObjetosciCent()
+        {
+            // Arrange
+            double expected = 0.00001;
+            Pudelko pudOb = new Pudelko(1, 1, 1, UnitOfMeasure.centimeter);
+
+            // Act
+
+            // Assert
+            double actual = pudOb.Objêtoœæ;
+            Assert.AreEqual(expected, actual, 0.001, "Objêtoœæ oczekiwana i otrzymana s¹ ró¿ne");
+        }
+
+        [TestMethod]
+        public void SprawdzanieObjetosciMetry()
+        {
+            // Arrange
+            double expected = 4.1956;
+            Pudelko pudOb = new Pudelko(1.234, 0.34, 10, UnitOfMeasure.meter);
+
+            // Act
+
+            // Assert
+            double actual = pudOb.Objêtoœæ;
+            Assert.AreEqual(expected, actual, 0.001, "Objêtoœæ oczekiwana i otrzymana s¹ ró¿ne");
+        }
+
+        [TestMethod]
+        public void SprawdzanieObjetosciMilimetry()
+        {
+            // Arrange
+            double expected = 0.031177993;//zaokragla do 9 chyba ok
+            Pudelko pudOb = new Pudelko(1111, 211, 133, UnitOfMeasure.milimeter);
+
+            // Act
+
+            // Assert
+            double actual = pudOb.Objêtoœæ;
+            Assert.AreEqual(expected, actual, 0.001, "Objêtoœæ oczekiwana i otrzymana s¹ ró¿ne");
+        }
+
+        //[TestMethod]
+        //public void SprawdzaniePolaCentymetry()
+        //{
+        //    // Arrange
+        //    double expected = ;
+        //    Pudelko pudOb = new Pudelko(1111, 211, 133, UnitOfMeasure.milimeter);
+
+        //    // Act
+
+        //    // Assert
+        //    double actual = pudOb.Pole;
+        //    Assert.AreEqual(expected, actual, 0.001, "Objêtoœæ oczekiwana i otrzymana s¹ ró¿ne");
+        //}
+        //}
+        //    properties Objetosc i Pole,
+        //    operatora ³¹czenia pude³ek,
+        //    operatora równoœci pude³ek,
+
+        //przy kilku, reprezentatywnych zestawach danych.
+
 
         //        #endregion
 
