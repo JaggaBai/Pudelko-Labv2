@@ -97,28 +97,60 @@ namespace PudelkoApp
             Console.Write("Sprawdza utworzenie nowego pudełka przez użycie łączenia pudełko o wymiarach: A: {0} B: {1}, C: {2}", pudL3.A, pudL2.B, pudL3.C);
             Console.WriteLine();
 
-            //        Sortowanie pudełek
-
-            //W funkcji Main programu głównego(aplikacja konsolowa) utwórz listę kliku różnych pudełek, używając różnych wariantów konstruktora.
-            //Wypisz pudełka umieszczone na liście(po jednym w wierszu).
-            //Posortuj tę listę według następującego kryterium: p1 poprzedza p2 jeśli:
-            //    objętość p1<objętość p2
-            //    jeśli objętości są równe, to decyduje pole powierzchni całkowitej,
-            //    jeśli również pola powierzchni całkowitej są równe, to decyduje suma długości krawędzi A+B + C.
-            //Kryterium sortowania dostarcz jako delegat Comparison<Pudelko>.
-            //Wypisz listę posortowaną.
-            ////Użycie lambdy tu ma być?
-
             var lista = new List<Pudelko>();
             lista.Add(new Pudelko(10));
             lista.Add(new Pudelko(unit: UnitOfMeasure.centimeter));
             lista.Add(new Pudelko());
-            lista.Add(new Pudelko(2.500, 9.32, 0.100, UnitOfMeasure.meter));
+            lista.Add(new Pudelko(9, 9, 9, UnitOfMeasure.meter));
             lista.Add(new Pudelko(250, 933, 10, UnitOfMeasure.centimeter));
-
+            lista.Add(new Pudelko(2.500, 9.32, 0.100, UnitOfMeasure.meter));
+            lista.Add(new Pudelko(100, 101, 100, UnitOfMeasure.milimeter));
+            lista.Add(new Pudelko(4, 2, 1, UnitOfMeasure.meter));
+            lista.Add(new Pudelko(2, 2, 2, UnitOfMeasure.meter));
+            Console.WriteLine("Lista przed sortowaniem:");
             foreach (var p in lista)
+            {
                 Console.WriteLine(p);
+                
+            }
 
+            Comparison<Pudelko> pudComparer = new Comparison<Pudelko>(PComparer);
+            lista.Sort(pudComparer);
+
+            Console.WriteLine("Po sortowaniu wedle Comparer delegate: ");
+            foreach (var p in lista)
+            {
+                Console.WriteLine(p);
+         
+            }
+            Console.WriteLine("Lista po sortowaniu cdn. (pokazuje pierwsze kryterium, Objętość:):");
+            
+                foreach (var p in lista)
+            {
+                Console.WriteLine(p.Objętość);
+            }
+            Console.WriteLine("Lista po sortowaniu cdn. (pokazuje drugie kryterium Pole - dwie Objętości równe 8 są ustawione w sortowanium wedle drugiego kryterium):");
+            foreach (var p in lista)
+            {
+                Console.WriteLine(p.Pole);
+            }
+            
         }
+        private static int PComparer(Pudelko pp1, Pudelko pp2)
+        {
+            if (pp1.Objętość < pp2.Objętość || pp1.Objętość> pp2.Objętość)
+            {
+                return (pp1.Objętość.CompareTo(pp2.Objętość));
+            }
+            else
+            {
+                if (pp1.Pole < pp2.Pole || pp1.Pole > pp2.Pole)
+
+                    return (pp1.Pole.CompareTo(pp2.Pole));
+                else return (pp1.SumaKrawedzi.CompareTo(pp2.SumaKrawedzi));
+            }
+        }
+        
     }
-}
+    }
+

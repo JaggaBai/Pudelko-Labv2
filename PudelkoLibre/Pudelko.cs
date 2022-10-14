@@ -171,6 +171,13 @@ namespace PudelkoLibre
                 return Math.Round(2 * (A * B + A * C + B * C), 6);
             }
         }
+        public double SumaKrawedzi //dodatk
+        {
+            get
+            {
+                return Math.Round(A+B+C, 6);
+            }
+        }
         public bool Equals(Pudelko other)
         {
             if (other is null) return false;
