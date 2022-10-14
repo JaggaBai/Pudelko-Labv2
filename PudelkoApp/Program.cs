@@ -6,14 +6,10 @@ using System.Collections.Generic;
 namespace PudelkoApp
 {
 
-    //    Metody rozszerzające
-
-    //W projekcie typu Console App utwórz metodę rozszerzającą klasę Pudelko o nazwie Kompresuj, która zwraca pudełko sześcienne o takiej samej objętości, jak pudełko oryginalne.
-
-    static class Exten {
+    static class Exten { //o *prawie* takiej samej objętości
         public static Pudelko Kompresuj(this Pudelko str)
         {
-            double bok = Math.Pow(str.Objętość, (1.0/3.0));
+            double bok = Math.Round(Math.Pow(str.Objętość, (1.0/3.0)), 6, MidpointRounding.AwayFromZero);
 
             return new Pudelko(bok, bok, bok, UnitOfMeasure.meter);
         }
@@ -31,7 +27,7 @@ namespace PudelkoApp
 
             Console.WriteLine();
 
-            //ToString - powinno wyjść "2.500 m × 9.321 m × 0.100 m"
+            //ToString oraz domyślny "unit"- powinno wyjść "2.500 m × 9.321 m × 0.100 m"
             Pudelko sprStr = new Pudelko(2.5, 9.321, 0.1);
             string efektSprStr = sprStr.ToString();
             Console.WriteLine("Sprawdzenie działania ToString P(2.5, 9.321, 0.1), otrzymujemy: {0}", efektSprStr);
@@ -56,21 +52,51 @@ namespace PudelkoApp
 
             Console.WriteLine();
 
-            //Metoda rozszerzajaca Kompresuj zwraca pudełko sześcienne o takiej samej objętości, jak pudełko oryginalne
+            //Objętość
+            Pudelko pudOb = new Pudelko(1, 2, 3, UnitOfMeasure.meter);
+            Console.Write("Pudełko ma pole:  {0}", pudOb.Pole);
+            Console.WriteLine();
+
+            //Metoda rozszerzajaca Kompresuj zwraca pudełko sześcienne o prawie takiej samej objętości, jak pudełko oryginalne
             Pudelko kom = pp3.Kompresuj();
             Console.Write("Pudełko po kompresji ma wymiary A: {0} B: {1}, C: {2}, Obj {3}", kom.A, kom.B, kom.C, kom.Objętość);
 
             Console.WriteLine();
 
             //Sprawdza możliwość użycia Parse
-            Pudelko an=  Pudelko.Parse("2.500 m × 9.321 m × 0.100 m");
+            Pudelko an = Pudelko.Parse("2.500 m × 9.321 m × 0.100 m");
             Console.Write("Sprawdza utworzenie nowego pudełka przez użycie Parse, o wymiarach: A: {0} B: {1}, C: {2}", an.A, an.B, an.C);
+            Pudelko an2 = Pudelko.Parse("220 mm × 200.3888 mm × 1000 mm");
+            Console.Write("Sprawdza utworzenie nowego pudełka przez użycie Parse, o wymiarach: A: {0} B: {1}, C: {2}", an2.A, an2.B, an2.C);
+            Pudelko an3 = Pudelko.Parse("2 cm × 20 cm × 10 cm");
+            Console.Write("Sprawdza utworzenie nowego pudełka przez użycie Parse, o wymiarach: A: {0} B: {1}, C: {2}", an3.A, an3.B, an3.C);
+            Console.WriteLine();
+
+            //Operacje konwersji
+            ValueTuple<int, int, int> kon1 = (1000, 3000, 2000);
+            Pudelko Pkon1 = kon1;
+            Console.Write("Sprawdza utworzenie nowego pudełka przez użycie implicit konwersji, pudełko o wymiarach: A: {0} B: {1}, C: {2}", Pkon1.A, Pkon1.B, Pkon1.C);
+            Console.WriteLine();
+            double[] ExpKon = (double[])Pkon1;
+            Console.WriteLine("Konwersja Explicit - poszczególne wymiary z double[] wyciągnięte:");
+            foreach (double x in ExpKon) { Console.Write(x + " "); }
 
             Console.WriteLine();
 
-          Pudelko pudOb = new Pudelko(1111, 211, 133, UnitOfMeasure.milimeter);
-            double wynik = pudOb.Objętość;
-            Console.WriteLine(wynik);
+            //indexer i foreach pętla [IEnumerable]
+            Console.WriteLine("Użycie indeksera - wymiar A: ");
+            Console.WriteLine(Pkon1[0]);
+            Console.WriteLine("Użycie IEnumerable wymiary: ");
+            foreach (double x in Pkon1) { Console.Write(x + " "); }
+            Console.WriteLine();
+
+            Pudelko pudL1 = new Pudelko(10, 20, 30, UnitOfMeasure.centimeter);
+            Pudelko pudL2 = new Pudelko(1000, 2000, 3000, UnitOfMeasure.milimeter);
+
+            Pudelko pudL3 = pudL2 + pudL1;
+            Console.Write("Sprawdza utworzenie nowego pudełka przez użycie łączenia pudełko o wymiarach: A: {0} B: {1}, C: {2}", pudL3.A, pudL2.B, pudL3.C);
+            Console.WriteLine();
+
             //        Sortowanie pudełek
 
             //W funkcji Main programu głównego(aplikacja konsolowa) utwórz listę kliku różnych pudełek, używając różnych wariantów konstruktora.
@@ -81,12 +107,14 @@ namespace PudelkoApp
             //    jeśli również pola powierzchni całkowitej są równe, to decyduje suma długości krawędzi A+B + C.
             //Kryterium sortowania dostarcz jako delegat Comparison<Pudelko>.
             //Wypisz listę posortowaną.
-            ////Użycie lambdy tu ma być
+            ////Użycie lambdy tu ma być?
 
             var lista = new List<Pudelko>();
             lista.Add(new Pudelko(10));
             lista.Add(new Pudelko(unit: UnitOfMeasure.centimeter));
-           
+            lista.Add(new Pudelko());
+            lista.Add(new Pudelko(2.500, 9.32, 0.100, UnitOfMeasure.meter));
+            lista.Add(new Pudelko(250, 933, 10, UnitOfMeasure.centimeter));
 
             foreach (var p in lista)
                 Console.WriteLine(p);

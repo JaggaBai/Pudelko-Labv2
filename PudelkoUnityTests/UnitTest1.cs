@@ -100,9 +100,6 @@ namespace PudelkoUnitTests
         }
 
 
-
-        //        // ----
-
         [DataTestMethod, TestCategory("Constructors")]
         [DataRow(1.0, 2.5, 1.0, 2.5)]
         [DataRow(1.001, 2.599, 1.001, 2.599)]
@@ -147,7 +144,6 @@ namespace PudelkoUnitTests
             AssertPudelko(p, expectedA, expectedB, expectedC: 0.1);
         }
 
-        // -------
 
         [DataTestMethod, TestCategory("Constructors")]
         [DataRow(2.5)]
@@ -193,7 +189,6 @@ namespace PudelkoUnitTests
             AssertPudelko(p, expectedA, expectedB: 0.1, expectedC: 0.1);
         }
 
-        //        // ---
 
         public static IEnumerable<object[]> DataSet1Meters_ArgumentOutOfRangeEx => new List<object[]>
         {
@@ -368,8 +363,6 @@ namespace PudelkoUnitTests
         }
 
 
-
-
         [DataTestMethod, TestCategory("Constructors")]
         [DataRow(-1.0)]
         [DataRow(0)]
@@ -445,8 +438,7 @@ namespace PudelkoUnitTests
             var p = new Pudelko(1);
             var stringformatedrepreentation = p.ToString("wrong code");
         }
-
-        //MOJE
+          #region Pole, Objêtoœæ ===================================
         //        Utwórz testy jednostkowe(unit tests) dla:
         //    properties Objetosc i Pole,
         [TestMethod]
@@ -491,42 +483,125 @@ namespace PudelkoUnitTests
             Assert.AreEqual(expected, actual, 0.001, "Objêtoœæ oczekiwana i otrzymana s¹ ró¿ne");
         }
 
-        //[TestMethod]
-        //public void SprawdzaniePolaCentymetry()
-        //{
-        //    // Arrange
-        //    double expected = ;
-        //    Pudelko pudOb = new Pudelko(1111, 211, 133, UnitOfMeasure.milimeter);
+        [TestMethod]
+        public void SprawdzaniePolaMetry()
+        {
+            // Arrange
+            double expected = 22;
+            Pudelko pudOb = new Pudelko(1, 2, 3, UnitOfMeasure.meter);
 
-        //    // Act
+            // Act
 
-        //    // Assert
-        //    double actual = pudOb.Pole;
-        //    Assert.AreEqual(expected, actual, 0.001, "Objêtoœæ oczekiwana i otrzymana s¹ ró¿ne");
-        //}
-        //}
-        //    properties Objetosc i Pole,
+            // Assert
+            double actual = pudOb.Pole;
+            Assert.AreEqual(expected, actual, 0.1, "Objêtoœæ oczekiwana i otrzymana s¹ ró¿ne");
+        }
+
+
+
+        [TestMethod]
+        public void SprawdzaniePolaMilimetry6miejscPoPrzecinku()
+        {
+            // Arrange
+            double expected = 2.036406;//6.ok
+            Pudelko pudOb2 = new Pudelko(111, 2331, 311, UnitOfMeasure.milimeter);
+
+            // Act
+
+            // Assert
+            double actual = pudOb2.Pole;
+            Assert.AreEqual(expected, actual, 0.1, "Objêtoœæ oczekiwana i otrzymana s¹ ró¿ne");
+        }
+
+        #endregion
+
         //    operatora ³¹czenia pude³ek,
-        //    operatora równoœci pude³ek,
+        [TestMethod]
+        public void SprawdzanieLaczeniaPudelekRozneMiary()
+        {
+            // Arrange
+            double expected1 = 3;//najd³.
+            double expected2 = 2;//najd³ ze œred.
+            double expected3 = 1.1;//dodane
 
-        //przy kilku, reprezentatywnych zestawach danych.
+            Pudelko pudL1 = new Pudelko(10, 20, 30, UnitOfMeasure.centimeter);
+            Pudelko pudL2 = new Pudelko(1000, 2000, 3000, UnitOfMeasure.milimeter);
+
+            // Act
+            Pudelko pudL3 = pudL2 + pudL1;
+            // Assert
+            double actual1 = pudL3.A;
+            double actual2 = pudL3.B;
+            double actual3 = pudL3.C;
+            Assert.AreEqual(expected1, actual1, 0.001, "D³ugoœæ boku oczekiwana i otrzymana s¹ ró¿ne");
+            Assert.AreEqual(expected2, actual2, 0.001, "D³ugoœæ boku oczekiwana i otrzymana s¹ ró¿ne");
+            Assert.AreEqual(expected3, actual3, 0.001, "D³ugoœæ boku oczekiwana i otrzymana s¹ ró¿ne");
+            
+        }
+        [TestMethod]
+        public void SprawdzanieLaczeniaPudelekDomyslneMiarySzescian()
+        {
+            // Arrange
+            double expected1 = 2;//najd³.
+            double expected2 = 2;//najd³ ze œred.
+            double expected3 = 4;//dodane
+
+            Pudelko pudL4 = new Pudelko(2, 2, 2);
+            Pudelko pudL5 = new Pudelko(2, 2, 2);
+
+            // Act
+            Pudelko pudL6 = pudL4 + pudL5;
+            // Assert
+            double actual1 = pudL6.A;
+            double actual2 = pudL6.B;
+            double actual3 = pudL6.C;
+            Assert.AreEqual(expected1, actual1, 0.001, "D³ugoœæ boku oczekiwana i otrzymana s¹ ró¿ne");
+            Assert.AreEqual(expected2, actual2, 0.001, "D³ugoœæ boku oczekiwana i otrzymana s¹ ró¿ne");
+            Assert.AreEqual(expected3, actual3, 0.001, "D³ugoœæ boku oczekiwana i otrzymana s¹ ró¿ne");
+
+        }
 
 
-        //        #endregion
+        #endregion
+
+        #region Equals ===========================================
+        [TestMethod]
+        public void SprawdzanieEqualsMieszaneJednostkiMixUstawien()
+        {
+
+            // Arrange
+
+            Pudelko p1 = new Pudelko(2, 3, 4, UnitOfMeasure.meter);
+            Pudelko p2 = new Pudelko(300.00, 200.01, 400, UnitOfMeasure.centimeter);
+            // Act
+
+            bool a = p1.Equals(p2);
+            // Assert
+
+            Assert.IsTrue(a);
+        }
+
+        [TestMethod]
+        public void SprawdzanieEqualsMetryIDomyslnyMix()
+        {
+
+            // Arrange
+
+            Pudelko p1 = new Pudelko(3, 2, 1, UnitOfMeasure.meter);
+            Pudelko p2 = new Pudelko(1, 2, 3);
+            // Act
+
+            bool a = p1.Equals(p2);
+            // Assert
+
+            Assert.IsTrue(a);
+        }
+        #endregion
 
 
-        //        #region Pole, Objêtoœæ ===================================
-        //        // ToDo
+        #region Operators overloading ===========================
 
-        //        #endregion
-
-        //        #region Equals ===========================================
-        //        // ToDo
-        //        #endregion
-
-        //        #region Operators overloading ===========================
-        //        // ToDo
-        //        #endregion
+        #endregion
 
         //        #region Conversions =====================================
         [TestMethod]
@@ -553,7 +628,7 @@ namespace PudelkoUnitTests
 
         //        #endregion
 
-        //        #region Indexer, enumeration ============================
+         #region Indexer, enumeration ============================
         [TestMethod]
         public void Indexer_ReadFrom()
         {
@@ -576,14 +651,71 @@ namespace PudelkoUnitTests
                 i++;
             }
         }
-    }
-}
-
-//        #endregion
-
-//        #region Parsing =========================================
+  
 
 #endregion
 
-//    }
-//}
+#region Parsing =========================================
+
+
+[TestMethod]
+public void ParsingMetry()
+{
+            // Arrange
+            double expected1 = 2.5;
+            double expected2 = 9.3;
+            double expected3 = 0.1;
+
+            // Act
+            Pudelko an = Pudelko.Parse("2.5 m × 9.3 m × 0.1 m");
+            // Assert
+            double actual1 = an.A;
+            double actual2 = an.B;
+            double actual3 = an.C;
+            Assert.AreEqual(expected1, actual1, 0.001, "D³ugoœæ boku oczekiwana i otrzymana s¹ ró¿ne/ brak parsowania");
+            Assert.AreEqual(expected2, actual2, 0.001, "D³ugoœæ boku oczekiwana i otrzymana s¹ ró¿ne/ brak parsowania");
+            Assert.AreEqual(expected3, actual3, 0.001, "D³ugoœæ boku oczekiwana i otrzymana s¹ ró¿ne/ brak parsowania parsowania");
+        }
+
+
+        [TestMethod]
+        public void ParsingMilimetry()
+        {
+            // Arrange
+            double expected1 = 0.22;
+            double expected2 = 0.2;
+            double expected3 = 1;
+
+            // Act
+            Pudelko an2 = Pudelko.Parse("220 mm × 200.3888 mm × 1000 mm");
+            // Assert
+            double actual1 = an2.A;
+            double actual2 = an2.B;
+            double actual3 = an2.C;
+            Assert.AreEqual(expected1, actual1, 0.1, "D³ugoœæ boku oczekiwana i otrzymana s¹ ró¿ne/ brak parsowania");
+            Assert.AreEqual(expected2, actual2, 0.1, "D³ugoœæ boku oczekiwana i otrzymana s¹ ró¿ne/ brak parsowania");
+            Assert.AreEqual(expected3, actual3, 0.1, "D³ugoœæ boku oczekiwana i otrzymana s¹ ró¿ne/ brak parsowania parsowania");
+        }
+        [TestMethod]
+        public void ParsingCentymetry()
+        {
+            // Arrange
+            double expected1 = 0.02;
+            double expected2 = 0.2;
+            double expected3 = 0.1;
+
+            // Act
+            Pudelko an3 = Pudelko.Parse("2 cm × 20 cm × 10 cm");
+            // Assert
+            double actual1 = an3.A;
+            double actual2 = an3.B;
+            double actual3 = an3.C;
+            Assert.AreEqual(expected1, actual1, 0.1, "D³ugoœæ boku oczekiwana i otrzymana s¹ ró¿ne/ brak parsowania");
+            Assert.AreEqual(expected2, actual2, 0.1, "D³ugoœæ boku oczekiwana i otrzymana s¹ ró¿ne/ brak parsowania");
+            Assert.AreEqual(expected3, actual3, 0.1, "D³ugoœæ boku oczekiwana i otrzymana s¹ ró¿ne/ brak parsowania parsowania");
+        }
+
+        #endregion
+
+    }
+}
