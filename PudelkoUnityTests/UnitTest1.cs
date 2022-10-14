@@ -601,6 +601,40 @@ namespace PudelkoUnitTests
 
         #region Operators overloading ===========================
 
+        [TestMethod]
+        public void SprawdzanieOverlodingTakieSamo()
+        {
+
+            // Arrange
+
+            Pudelko p11 = new Pudelko(3, 2, 1, UnitOfMeasure.meter);
+            Pudelko p22 = new Pudelko(1, 2, 3);
+            bool ono = true;
+            // Act
+
+            ono= (p11 == p22);
+            // Assert
+
+            Assert.IsTrue(ono);
+        }
+
+        [TestMethod]
+        public void SprawdzanieOverlodingNieTakieSamo()
+        {
+
+            // Arrange
+
+            Pudelko p11 = new Pudelko(3, 2, 1, UnitOfMeasure.meter);
+            Pudelko p22 = new Pudelko(1, 2, 3);
+            bool ono = true;
+            // Act
+
+            ono = (p11 != p22);
+            // Assert
+
+            Assert.IsFalse(ono);
+        }
+
         #endregion
 
         //        #region Conversions =====================================
@@ -653,14 +687,14 @@ namespace PudelkoUnitTests
         }
   
 
-#endregion
+            #endregion
 
-#region Parsing =========================================
+        #region Parsing =========================================
 
 
-[TestMethod]
-public void ParsingMetry()
-{
+            [TestMethod]
+            public void ParsingMetry()
+            {
             // Arrange
             double expected1 = 2.5;
             double expected2 = 9.3;

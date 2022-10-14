@@ -76,42 +76,31 @@ namespace PudelkoLibre
             return zz.ToString();
 
         }
+        public double DodajemyValueProsciej(UnitOfMeasure kkk) {
+            double x = 0;
+            if (kkk == UnitOfMeasure.milimeter)
+            {
+                x = 100;
+            }
+            else if (kkk== UnitOfMeasure.centimeter)
+            {
+                x = 10;
+            }
+            else if (kkk == UnitOfMeasure.meter)
+            { x= 0.1; }
+            return x;
+        }
 
         public Pudelko(double? a = null, double? b = null, double? c = null, UnitOfMeasure unit = UnitOfMeasure.meter)
         {
             UnitOfMeasure u = unit;
-            if (!a.HasValue & u == UnitOfMeasure.milimeter)
-            {
-                a = 100;
-            }
-            else if (!a.HasValue & u == UnitOfMeasure.centimeter)
-            {
-                a = 10;
-            }
-            else if (!a.HasValue & u == UnitOfMeasure.meter)
-            { a = 0.1; }
-
-            if (!b.HasValue & u == UnitOfMeasure.milimeter)
-            {
-                b = 100;
-            }
-            else if (!b.HasValue & u == UnitOfMeasure.centimeter)
-            {
-                b = 10;
-            }
-            else if (!b.HasValue & u == UnitOfMeasure.meter)
-            { b = 0.1; }
-
-            if (!c.HasValue & u == UnitOfMeasure.milimeter)
-            {
-                c = 100;
-            }
-            else if (!c.HasValue & u == UnitOfMeasure.centimeter)
-            {
-                c = 10;
-            }
-            else if (!c.HasValue & u == UnitOfMeasure.meter)
-            { c = 0.1; }
+            if (!a.HasValue)
+            { a = DodajemyValueProsciej(u); }
+            if (!b.HasValue)
+            { b = DodajemyValueProsciej(u); }
+            if (!c.HasValue)
+            { c = DodajemyValueProsciej(u); }
+           
             double a1 = Convert.ToDouble(WykopujemyMiejscaPoPrzecinku((double)a, u));
             double b1 = Convert.ToDouble(WykopujemyMiejscaPoPrzecinku((double)b, u));
             double c1 = Convert.ToDouble(WykopujemyMiejscaPoPrzecinku((double)c, u));
