@@ -354,12 +354,6 @@ namespace PudelkoLibre
             }
         }
 
-    //    Metody rozszerzające
-
-    //W projekcie typu Console App utwórz metodę rozszerzającą klasę Pudelko o nazwie Kompresuj, która zwraca pudełko sześcienne o takiej samej objętości, jak pudełko oryginalne.
-
-
-
     }
 }
 

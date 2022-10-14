@@ -2,8 +2,22 @@
 using System;
 using System.Collections.Generic;
 
+
 namespace PudelkoApp
 {
+
+    //    Metody rozszerzające
+
+    //W projekcie typu Console App utwórz metodę rozszerzającą klasę Pudelko o nazwie Kompresuj, która zwraca pudełko sześcienne o takiej samej objętości, jak pudełko oryginalne.
+
+    static class Exten {
+        public static Pudelko Kompresuj(this Pudelko str)
+        {
+            double bok = Math.Pow(str.Objętość, (1.0/3.0));
+
+            return new Pudelko(bok, bok, bok, UnitOfMeasure.meter);
+        }
+    }
     class Program
     {
         static void Main(string[] args)
@@ -42,6 +56,11 @@ namespace PudelkoApp
 
             Console.WriteLine();
 
+            //Metoda rozszerzajaca Kompresuj zwraca pudełko sześcienne o takiej samej objętości, jak pudełko oryginalne
+            Pudelko kom = pp3.Kompresuj();
+            Console.Write("Pudełko po kompresji ma wymiary A: {0} B: {1}, C: {2}, Obj {3}", kom.A, kom.B, kom.C, kom.Objętość);
+
+            Console.WriteLine();
 
             //Sprawdza możliwość użycia Parse
             Pudelko an=  Pudelko.Parse("2.500 m × 9.321 m × 0.100 m");
